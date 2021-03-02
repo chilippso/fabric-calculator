@@ -21,17 +21,17 @@
   },
   "webDependencies": {},
   "devDependencies": {
-    "@babel/preset-env": "^7.10.0",
+    "@babel/preset-env": "^7.13.9",
     "@snowpack/app-scripts-svelte": "^0.7.4",
     "@snowpack/plugin-webpack": "^0.8.1",
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/svelte": "^3.0.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/svelte": "^3.0.3",
     "jest": "^25.4.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
-    "snowpack": "^2.0.0-rc.12",
+    "snowpack": "^2.18.5",
     "standard": "^14.3.4",
-    "svelte": "^3.21.0",
-    "webpack": "^4.43.0"
+    "svelte": "^3.35.0",
+    "webpack": "^4.46.0"
   },
   "dependencies": {
     "guillotine-packer": "^1.0.2",
