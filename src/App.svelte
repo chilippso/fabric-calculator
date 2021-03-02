@@ -2,12 +2,19 @@
   <h1>Fabric calculator</h1>
   <p>
     This tool can calculate how much fabric you should buy based on the pieces you need to cut.
-    The default assumption is that fabric is sold by the half-yard. All values are in inches.
   </p>
   <div class="flex flex-h-when-big">
     <div>
       <div class="pad-v-10 pad-h-10">
         <div class="grid grid-gap-20 grid-2fr-1fr">
+          <label for="unit">Measurement unit:</label>
+          <div class="input-wrap">
+            <select id="unit" bind:value={unit}>
+              {#each Object.keys(units) as u}
+                <option value="{u}">{units[u].long}</option>
+              {/each}
+            </select>
+          </div>
           <label for="fabric-width">Width of fabric you're buying:</label>
           <div class="input-wrap">
             <input id="fabric-width" type="number" inputmode="numeric"
@@ -70,7 +77,7 @@
         {/if}
         {#if solution && !errorMessage}
           <div class="solution-message pad-v-10">
-            You need a piece of fabric <strong>{solution.fabricHeight} inches</strong> long.
+            You need a piece of fabric <strong>{solution.fabricHeight} {units[unit].long}</strong> long.
           </div>
         {/if}
         {#if solution}
@@ -79,6 +86,7 @@
             width={fabricWidth}
             height={solution.fabricHeight}
             increment={fabricSoldBy}
+            unit={units[unit]}
           />
         {/if}
     </div>
@@ -141,7 +149,8 @@
     display: flex;
   }
 
-  .input-wrap input {
+  .input-wrap input,
+  .input-wrap select {
     flex: 1;
     width: 0;
     max-width: 100%;
@@ -273,8 +282,9 @@
     cursor: pointer;
   }
 
-  input {
+  input, select {
     font-size: 1em;
+    padding: 2px;
   }
 
   :global(input[type=checkbox]) {
@@ -308,6 +318,16 @@
   import { getColor } from './colors.js'
 
   const MAX_NUM_CALCULATIONS = 100
+  const units = {
+    in: {
+      long: 'inches',
+      short: '"'
+    },
+    cm: {
+      long: 'centimeters',
+      short: 'cm',
+    }
+  }
 
   let fabricSoldBy = 18 // half a yard
   let fabricPieces = []
@@ -316,6 +336,7 @@
   let errorMessage = ''
   let fabricId = -1
   let solution
+  let unit = 'in'
 
   function addFabricPiece () {
     fabricPieces = fabricPieces.concat([{
@@ -332,6 +353,12 @@
 
   function isValidNonzeroInteger (i) {
     return i && typeof i === 'number' && i > 0
+  }
+
+  function setUnit (u) {
+    if (units[u]) {
+      unit = u
+    }
   }
 
   $: {

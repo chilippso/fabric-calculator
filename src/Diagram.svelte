@@ -7,11 +7,11 @@
   <div class="grid" aria-hidden="true">
     <div/>
     <div class="x-label">
-        {width}"
+        {width}{unit.short}
     </div>
     <div/>
     <div class="y-label">
-        {height}" (selvage)
+        {height}{unit.short} (selvage)
     </div>
     <div>
       <svg xmlns="http://www.w3.org/2000/svg"
@@ -113,4 +113,5 @@
   export let items
   export let height
   export let width
+  export let unit
 </script>
