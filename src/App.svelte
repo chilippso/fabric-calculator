@@ -355,12 +355,6 @@
     return i && typeof i === 'number' && i > 0
   }
 
-  function setUnit (u) {
-    if (units[u]) {
-      unit = u
-    }
-  }
-
   $: {
     function calculateFabricNeeded () {
       solution = undefined
