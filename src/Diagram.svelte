@@ -1,6 +1,6 @@
 <section aria-label="Diagram {width} wide by {height} long">
   <ul class="sr-only" aria-label="Fabric pieces drawn in the diagram">
-      {#each items as item, i (item.id)}
+      {#each items as item, i (item.key)}
         <li>Fabric piece #{i + 1}: {item.width} wide by {item.height} long, at position {item.x}, {item.y}</li>
       {/each}
   </ul>
@@ -18,7 +18,7 @@
            viewBox="0 0 {width} {height}"
       >
         <!-- rectangles -->
-          {#each items as item, i (item.id)}
+          {#each items as item, i (item.key)}
             <rect x={item.x}
                   y={item.y}
                   width={item.width}

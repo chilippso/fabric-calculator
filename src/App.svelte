@@ -63,6 +63,15 @@
                            placeholder="10" bind:value={fabricPieces[i].height}>
                   </div>
                 </div>
+                <div class="grid grid-gap-10 pad-v-10 fabric-piece-grid">
+                  <div>
+                    <label for="fabric-amount-{i}">Amount:</label>
+                  </div>
+                  <div class="input-wrap">
+                    <input id="fabric-amount-{i}" type="number" inputmode="numeric"
+                           placeholder="1" bind:value={fabricPieces[i].amount}>
+                  </div>
+                </div>
               </li>
             {/each}
         </ul>
@@ -342,7 +351,8 @@
     fabricPieces = fabricPieces.concat([{
       width: 10,
       height: 10,
-      id: ++fabricId
+      id: ++fabricId,
+      amount: 1
     }])
   }
 
@@ -381,20 +391,30 @@
             errorMessage = 'Could not calculate a solution to this problem.'
             return
           }
+
+          let uniqueItems = [];
+          fabricPieces.forEach(({ width, height, id, amount }) => {
+            for (let i = 0; i < amount; i++) {
+              uniqueItems.push({ width, height, name: id, key: id + '-' + i });
+            }
+          });
+
           const bins = packer({
             binWidth: fabricWidth,
             binHeight: fabricHeight,
-            items: fabricPieces.map(({ width, height, id }) => ({ width, height, name: id })),
+            items: uniqueItems,
           }, {
             allowRotation
           })
           if (bins.length === 1) {
+            console.log('bin', bins[0]);
             const items = bins[0].map(item => ({
               width: item.width,
               height: item.height,
               x: item.x,
               y: item.y,
-              id: item.item.name
+              id: item.item.name,
+              key: item.item.key
             })).sort((a, b) => (a.id < b.id ? -1 : 1))
             solution = {
               items,
